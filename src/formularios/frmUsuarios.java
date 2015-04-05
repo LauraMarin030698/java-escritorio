@@ -6,6 +6,7 @@
 package formularios;
 
 import clases.Datos;
+import clases.Usuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -108,15 +109,35 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         btnPrimero.setText("Primero");
         btnPrimero.setToolTipText("Va al primer registro");
+        btnPrimero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrimeroActionPerformed(evt);
+            }
+        });
 
         btnUltimo.setText("Ultimo");
         btnUltimo.setToolTipText("Va al último registro");
+        btnUltimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimoActionPerformed(evt);
+            }
+        });
 
         btnSiguiente.setText("Siguiente");
         btnSiguiente.setToolTipText("Registro siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         btnAnterior.setText("Anterior");
         btnAnterior.setToolTipText("Registro anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
         btnModificar.setToolTipText("Modifica el registro actual");
@@ -145,6 +166,11 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
 
         btnBorrar.setText("Borrar");
         btnBorrar.setToolTipText("Borra el registro actual");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.setToolTipText("Busca un registro");
@@ -346,6 +372,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         
         if(!clave.equals(confirmacion)){
             JOptionPane.showMessageDialog(rootPane,"No son iguales");
+            txtClave.setText("");
+            txtConfirmacion.setText("");
             txtClave.requestFocusInWindow();
             return;
         }
@@ -370,7 +398,21 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         
         // Creamos el objeto Usuario y lo agregamos a datos
         
-        // hasta aquí video 11 Usuario miUsuario = new Usuario(
+        Usuario miUsuario = new Usuario(
+                    txtIDUsuario.getText(),
+                    txtNombres.getText(),
+                    txtApellidos.getText(),
+                    clave,
+                    cmbPerfil.getSelectedIndex() );
+        
+        String msg;
+        if(nuevo){
+            msg = misDatos.agregarUsuario(miUsuario);
+        } else{
+            msg = misDatos.modificarUsuario(miUsuario, pos);
+        }
+        
+        JOptionPane.showMessageDialog(rootPane, msg);
 
         // Deshabilita los botones Guardar y Cancelar, activa los otros
         btnPrimero.setEnabled(true);
@@ -451,14 +493,47 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        mostrarRegistro();
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
+        usuAct = 0;
+        mostrarRegistro();
+    }//GEN-LAST:event_btnPrimeroActionPerformed
+
+    private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
+        usuAct = misDatos.numeroUsuarios() -1;
+        mostrarRegistro();
+    }//GEN-LAST:event_btnUltimoActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        usuAct ++;
+        if(usuAct == misDatos.numeroUsuarios()){
+        usuAct = 0;
+        }
+        mostrarRegistro();
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        usuAct --;
+        if(usuAct == -1){
+            usuAct = misDatos.numeroUsuarios()-1;
+        }
+        mostrarRegistro();
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // Mitad video 13
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void mostrarRegistro(){
         txtIDUsuario.setText(misDatos.getUsuario()[usuAct].getIdUsuario());
         txtNombres.setText(misDatos.getUsuario()[usuAct].getNombres());
         txtApellidos.setText(misDatos.getUsuario()[usuAct].getApellidos());
         txtClave.setText(misDatos.getUsuario()[usuAct].getClave());
         txtConfirmacion.setText(misDatos.getUsuario()[usuAct].getClave());
         cmbPerfil.setSelectedIndex(misDatos.getUsuario()[usuAct].getPerfil());
-    }//GEN-LAST:event_formInternalFrameOpened
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;

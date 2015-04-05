@@ -8,9 +8,23 @@ public class Datos {
     private int contUsu = 0;
     
     public Datos(){
-        Usuario miUsuario = new Usuario("zulu","Juan Carlos","Zuluaga Cardona", "123", 1);
+        Usuario miUsuario;
+        
+        miUsuario = new Usuario("zulu","Juan Carlos","Zuluaga Cardona", "123", 1);
         misUsuarios[contUsu] = miUsuario;
         contUsu ++;
+        
+        miUsuario = new Usuario("hernan","Hernan ","Ramirez ", "123", 2);
+        misUsuarios[contUsu] = miUsuario;
+        contUsu ++;
+        
+        miUsuario = new Usuario("pedro","Dario"," Salas", "123", 2);
+        misUsuarios[contUsu] = miUsuario;
+        contUsu ++;
+    }
+    
+    public int numeroUsuarios(){
+        return contUsu;
     }
     
     public Usuario[] getUsuario(){
@@ -54,5 +68,13 @@ public class Datos {
         misUsuarios[contUsu] = miUsuario;
         contUsu ++;
         return "Usuario agregado correctamente";
+    }
+    
+    public String modificarUsuario(Usuario miUsuario, int pos){
+        misUsuarios[pos].setNombres(miUsuario.getNombres());
+        misUsuarios[pos].setApellidos(miUsuario.getApellidos());
+        misUsuarios[pos].setClave(miUsuario.getClave());
+        misUsuarios[pos].setPerfil(miUsuario.getPerfil());
+        return "Usuario modificado correctamente";
     }
 }

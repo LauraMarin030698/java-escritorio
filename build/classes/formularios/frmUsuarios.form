@@ -223,24 +223,36 @@
         <Property name="text" type="java.lang.String" value="Primero"/>
         <Property name="toolTipText" type="java.lang.String" value="Va al primer registro"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrimeroActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnUltimo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ultimo"/>
         <Property name="toolTipText" type="java.lang.String" value="Va al &#xfa;ltimo registro"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUltimoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSiguiente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Siguiente"/>
         <Property name="toolTipText" type="java.lang.String" value="Registro siguiente"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSiguienteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAnterior">
       <Properties>
         <Property name="text" type="java.lang.String" value="Anterior"/>
         <Property name="toolTipText" type="java.lang.String" value="Registro anterior"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnteriorActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnModificar">
       <Properties>
@@ -275,6 +287,9 @@
         <Property name="text" type="java.lang.String" value="Borrar"/>
         <Property name="toolTipText" type="java.lang.String" value="Borra el registro actual"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>
