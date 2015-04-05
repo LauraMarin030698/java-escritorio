@@ -5,15 +5,22 @@
  */
 package formularios;
 
+import clases.Datos;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Hernan
  */
 public class frmUsuarios extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form frmUsuarios
-     */
+    private Datos misDatos;
+    private int usuAct = 0;
+    private boolean nuevo = false;
+    
+    public void setDatos(Datos misDatos){
+        this.misDatos = misDatos;
+    }
     public frmUsuarios() {
         initComponents();
     }
@@ -43,39 +50,58 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         btnUltimo = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
-        btnAnterior1 = new javax.swing.JButton();
-        btnPrimero1 = new javax.swing.JButton();
-        btnSiguiente1 = new javax.swing.JButton();
-        btnUltimo1 = new javax.swing.JButton();
-        btnUltimo2 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        lblClave1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Usuarios");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
-        lblIDUsuario.setText("ID Usuario: ");
+        lblIDUsuario.setText("ID Usuario *: ");
 
         txtIDUsuario.setEnabled(false);
 
         txtNombres.setEnabled(false);
 
-        lblNombres.setText("Nombres:");
+        lblNombres.setText("Nombres *:");
 
         txtApellidos.setEnabled(false);
 
-        lblApellidos.setText("Apellidos:");
+        lblApellidos.setText("Apellidos *:");
 
-        lblClave.setText("Clave:");
+        lblClave.setText("Clave *:");
 
         txtClave.setEnabled(false);
 
         txtConfirmacion.setEnabled(false);
 
-        lblConfirmacion.setText("Confirmacion:");
+        lblConfirmacion.setText("Confirmacion *:");
 
-        lblPerfil.setText("Perfil:");
+        lblPerfil.setText("Perfil *:");
 
         cmbPerfil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un Perfil", "Administrador", "Empleado" }));
         cmbPerfil.setEnabled(false);
@@ -92,20 +118,48 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         btnAnterior.setText("Anterior");
         btnAnterior.setToolTipText("Registro anterior");
 
-        btnAnterior1.setText("Modificar");
-        btnAnterior1.setToolTipText("Registro anterior");
+        btnModificar.setText("Modificar");
+        btnModificar.setToolTipText("Modifica el registro actual");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
-        btnPrimero1.setText("Nuevo");
-        btnPrimero1.setToolTipText("Va al primer registro");
+        btnNuevo.setText("Nuevo");
+        btnNuevo.setToolTipText("Crea un nuevo registro");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
-        btnSiguiente1.setText("Guardar");
-        btnSiguiente1.setToolTipText("Registro siguiente");
+        btnGuardar.setText("Guardar");
+        btnGuardar.setToolTipText("Guarda los cambios");
+        btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        btnUltimo1.setText("Borrar");
-        btnUltimo1.setToolTipText("Va al último registro");
+        btnBorrar.setText("Borrar");
+        btnBorrar.setToolTipText("Borra el registro actual");
 
-        btnUltimo2.setText("Buscar");
-        btnUltimo2.setToolTipText("Va al último registro");
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("Busca un registro");
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Borra el registro actual");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        lblClave1.setForeground(new java.awt.Color(0, 102, 102));
+        lblClave1.setText("Campos obligatorios *");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,52 +168,54 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblIDUsuario)
-                            .addComponent(lblNombres)
-                            .addComponent(lblApellidos)
-                            .addComponent(lblClave))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombres)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtIDUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblPerfil, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblConfirmacion, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtConfirmacion))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cmbPerfil, 0, 127, Short.MAX_VALUE))))
-                            .addComponent(txtApellidos)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPrimero)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnUltimo)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnPrimero1)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSiguiente1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAnterior)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSiguiente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAnterior1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUltimo1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUltimo2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblIDUsuario)
+                                .addComponent(lblNombres)
+                                .addComponent(lblApellidos)
+                                .addComponent(lblClave))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombres)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtIDUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblPerfil, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblConfirmacion, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtConfirmacion))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(18, 18, 18)
+                                            .addComponent(cmbPerfil, 0, 127, Short.MAX_VALUE))))
+                                .addComponent(txtApellidos)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnAnterior)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSiguiente)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnModificar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnBorrar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnPrimero)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnUltimo)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnNuevo)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnGuardar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lblClave1))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblConfirmacion, lblPerfil});
@@ -189,41 +245,236 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblConfirmacion)
                     .addComponent(txtConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnPrimero)
-                            .addComponent(btnUltimo)
-                            .addComponent(btnPrimero1)
-                            .addComponent(btnSiguiente1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAnterior)
-                            .addComponent(btnSiguiente)
-                            .addComponent(btnAnterior1)
-                            .addComponent(btnUltimo1)))
-                    .addComponent(btnUltimo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblClave1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPrimero)
+                    .addComponent(btnUltimo)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnterior)
+                    .addComponent(btnSiguiente)
+                    .addComponent(btnModificar)
+                    .addComponent(btnBorrar)
+                    .addComponent(btnCancelar))
+                .addGap(125, 125, 125))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // Habilita los botones
+        btnPrimero.setEnabled(false);
+        btnAnterior.setEnabled(false);
+        btnSiguiente.setEnabled(false);
+        btnUltimo.setEnabled(false);
+        btnNuevo.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnBorrar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        
+        // Habilita los campos
+        txtIDUsuario.setEnabled(true);
+        txtNombres.setEnabled(true);
+        txtApellidos.setEnabled(true);
+        txtClave.setEnabled(true);
+        txtConfirmacion.setEnabled(true);
+        cmbPerfil.setEnabled(true);
+        
+        // Limpiar campos
+        txtIDUsuario.setText("");
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        txtClave.setText("");
+        txtConfirmacion.setText("");
+        cmbPerfil.setSelectedIndex(0);
+        
+        // Activamos el flag de registro nuevo
+        nuevo = true;
+        
+        // Damos foco al campo ID
+        txtIDUsuario.requestFocusInWindow();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // Validaciones
+        if(txtIDUsuario.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane,"Debe digitar un ID");
+            txtIDUsuario.requestFocusInWindow();
+            return;
+        }
+        
+        if(cmbPerfil.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(rootPane,"Debe seleccionar un ID");
+            cmbPerfil.requestFocusInWindow();
+            return;
+        }
+        
+        if(txtNombres.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane,"Debe digitar un(os) nombre(s)");
+            txtNombres.requestFocusInWindow();
+            return;
+        }
+        
+        if(txtApellidos.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane,"Debe digitar un(os) apellidos(s)");
+            txtApellidos.requestFocusInWindow();
+            return;
+        }
+        
+        String clave = new String (txtClave.getPassword());
+        String confirmacion = new String (txtConfirmacion.getPassword());
+        
+        if(clave.equals("")){
+            JOptionPane.showMessageDialog(rootPane,"Debe digitar una clave");
+            txtClave.requestFocusInWindow();
+            return;
+        }
+        
+        if(confirmacion.equals("")){
+            JOptionPane.showMessageDialog(rootPane,"Debe reingresar la clave");
+            txtConfirmacion.requestFocusInWindow();
+            return;
+        }
+        
+        if(!clave.equals(confirmacion)){
+            JOptionPane.showMessageDialog(rootPane,"No son iguales");
+            txtClave.requestFocusInWindow();
+            return;
+        }
+        
+        // Sí es nuevo, validamos que el usuario exista
+        
+        int pos = misDatos.posicionUsuario(txtIDUsuario.getText());
+        
+        if(nuevo){
+            if(pos != -1){
+                JOptionPane.showMessageDialog(rootPane,"Usuario ya existe");
+                txtIDUsuario.requestFocusInWindow();
+                return;
+            }
+        }else{
+            if(pos == -1){
+                JOptionPane.showMessageDialog(rootPane,"Usuario no existe");
+                txtIDUsuario.requestFocusInWindow();
+                return;
+            }
+        }
+        
+        // Creamos el objeto Usuario y lo agregamos a datos
+        
+        // hasta aquí video 11 Usuario miUsuario = new Usuario(
+
+        // Deshabilita los botones Guardar y Cancelar, activa los otros
+        btnPrimero.setEnabled(true);
+        btnAnterior.setEnabled(true);
+        btnSiguiente.setEnabled(true);
+        btnUltimo.setEnabled(true);
+        btnNuevo.setEnabled(true);
+        btnModificar.setEnabled(true);
+        btnBorrar.setEnabled(true);
+        btnBuscar.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        
+        // Deshabilita los campos
+        txtIDUsuario.setEnabled(false);
+        txtNombres.setEnabled(false);
+        txtApellidos.setEnabled(false);
+        txtClave.setEnabled(false);
+        txtConfirmacion.setEnabled(false);
+        cmbPerfil.setEnabled(false);
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // Deshabilita los botones Guardar y Cancelar, activa los otros
+        btnPrimero.setEnabled(true);
+        btnAnterior.setEnabled(true);
+        btnSiguiente.setEnabled(true);
+        btnUltimo.setEnabled(true);
+        btnNuevo.setEnabled(true);
+        btnModificar.setEnabled(true);
+        btnBorrar.setEnabled(true);
+        btnBuscar.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        
+        // Deshabilita los campos
+        txtIDUsuario.setEnabled(false);
+        txtNombres.setEnabled(false);
+        txtApellidos.setEnabled(false);
+        txtClave.setEnabled(false);
+        txtConfirmacion.setEnabled(false);
+        cmbPerfil.setEnabled(false);
+        
+        // Limpiar campos
+        txtIDUsuario.setText("");
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        txtClave.setText("");
+        txtConfirmacion.setText("");
+        cmbPerfil.setSelectedIndex(0);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // Habilita los botones
+        btnPrimero.setEnabled(false);
+        btnAnterior.setEnabled(false);
+        btnSiguiente.setEnabled(false);
+        btnUltimo.setEnabled(false);
+        btnNuevo.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnBorrar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        
+        // Habilita los campos
+        txtNombres.setEnabled(true);
+        txtApellidos.setEnabled(true);
+        txtClave.setEnabled(true);
+        txtConfirmacion.setEnabled(true);
+        cmbPerfil.setEnabled(true);
+        
+        // Damos foco al campo ID
+        txtNombres.requestFocusInWindow();
+        
+        // Desactivamos el flag de registro nuevo
+        nuevo = false;
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        txtIDUsuario.setText(misDatos.getUsuario()[usuAct].getIdUsuario());
+        txtNombres.setText(misDatos.getUsuario()[usuAct].getNombres());
+        txtApellidos.setText(misDatos.getUsuario()[usuAct].getApellidos());
+        txtClave.setText(misDatos.getUsuario()[usuAct].getClave());
+        txtConfirmacion.setText(misDatos.getUsuario()[usuAct].getClave());
+        cmbPerfil.setSelectedIndex(misDatos.getUsuario()[usuAct].getPerfil());
+    }//GEN-LAST:event_formInternalFrameOpened
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
-    private javax.swing.JButton btnAnterior1;
+    private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnPrimero;
-    private javax.swing.JButton btnPrimero1;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JButton btnSiguiente1;
     private javax.swing.JButton btnUltimo;
-    private javax.swing.JButton btnUltimo1;
-    private javax.swing.JButton btnUltimo2;
     private javax.swing.JComboBox cmbPerfil;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblClave;
+    private javax.swing.JLabel lblClave1;
     private javax.swing.JLabel lblConfirmacion;
     private javax.swing.JLabel lblIDUsuario;
     private javax.swing.JLabel lblNombres;

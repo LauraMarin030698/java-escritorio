@@ -5,15 +5,19 @@
  */
 package formularios;
 
+import clases.Datos;
+
 /**
  *
  * @author Hernan
  */
 public class frmPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmPrincipal
-     */
+    private Datos misDatos;
+    
+    public void setDatos(Datos misDatos){
+        this.misDatos = misDatos;
+    }
     public frmPrincipal() {
         initComponents();
     }
@@ -158,6 +162,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void mnuArchivoUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchivoUsuariosActionPerformed
         frmUsuarios misUsuarios = new frmUsuarios();
+        misUsuarios.setDatos(misDatos);
         dpnEscritorio.add(misUsuarios);
         misUsuarios.show();
     }//GEN-LAST:event_mnuArchivoUsuariosActionPerformed
